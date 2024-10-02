@@ -13,17 +13,17 @@ import { useState, useEffect } from "react";
 function App() {
   const [usuarioLogueado, setUsuarioLogueado] = useState(false);
 
-  // Efecto para verificar el estado de inicio de sesión
+  // el estado de inicio de sesión
   useEffect(() => {
     const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioLogueado"));
     if (usuarioGuardado) {
-      setUsuarioLogueado(usuarioGuardado);
+      setUsuarioLogueado(true);
     }
   }, []);
 
   return (
     <BrowserRouter>
-      <Navbar
+      <Menu
         usuarioLogueado={usuarioLogueado}
         setUsuarioLogueado={setUsuarioLogueado}
       />

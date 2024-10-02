@@ -6,10 +6,10 @@ const Menu = ({ usuarioLogueado, setUsuarioLogueado }) => {
   const navegacion = useNavigate();
 
   const logout = () => {
-    // Elimina el estado del usuario en localStorage o sessionStorage según tu implementación
-    localStorage.removeItem("usuarioLogueado"); // Cambié sessionStorage a localStorage
-    setUsuarioLogueado(false); // Cambié a false para representar el estado de no logueado
-    navegacion("/"); // Redirige a la página principal
+    
+    localStorage.removeItem("usuarioLogueado"); 
+    setUsuarioLogueado(false); 
+    navegacion("/"); 
   };
 
   return (
