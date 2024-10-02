@@ -1,7 +1,8 @@
 const Inicio = () => {
   return (
-    <div>
-      <h2>maquetado del index</h2>
+    <div className="container">
+      <h1>Bienvenido al Blog de Recetas</h1>
+      <p>Aquí encontrarás las mejores recetas.</p>
     </div>
   );
 };
