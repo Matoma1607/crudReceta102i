@@ -8,31 +8,61 @@ import Error404 from "./components/pages/Error404";
 import Inicio from "./components/pages/Inicio";
 import Login from "./components/pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 
 function App() {
+  const [usuarioLogueado, setUsuarioLogueado] = useState(false);
+
+  // Efecto para verificar el estado de inicio de sesión
+  useEffect(() => {
+    const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    if (usuarioGuardado) {
+      setUsuarioLogueado(usuarioGuardado);
+    }
+  }, []);
+
   return (
-    <>
-      <BrowserRouter>
-        <Menu />
-        <Routes>
-          <Route exact path="/" element={<Inicio />}></Route>
-          <Route
-            exact
-            path="/detallereceta"
-            element={<DetalleReceta />}
-          ></Route>
-          <Route
-            exact
-            path="/administrador"
-            element={<Administrador />}
-          ></Route>
-          <Route exact path="/*" element={<Error404 />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Navbar
+        usuarioLogueado={usuarioLogueado}
+        setUsuarioLogueado={setUsuarioLogueado}
+      />
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/administrador"
+          element={
+            usuarioLogueado ? (
+              <Administrador />
+            ) : (
+              <Login setUsuarioLogueado={setUsuarioLogueado} />
+            )
+          }
+        />
+        <Route
+          path="/detalle-receta/:id"
+          element={
+            usuarioLogueado ? (
+              <DetalleReceta />
+            ) : (
+              <Login setUsuarioLogueado={setUsuarioLogueado} />
+            )
+          }
+        />
+
+        {/* Ruta para el Login */}
+        <Route
+          path="/login"
+          element={<Login setUsuarioLogueado={setUsuarioLogueado} />}
+        />
+
+        {/* Ruta para el error 404 */}
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

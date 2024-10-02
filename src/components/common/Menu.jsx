@@ -6,10 +6,12 @@ const Menu = ({ usuarioLogueado, setUsuarioLogueado }) => {
   const navegacion = useNavigate();
 
   const logout = () => {
-    sessionStorage.removeItem("userKey");
-    setUsuarioLogueado("");
-    navegacion("/");
+    // Elimina el estado del usuario en localStorage o sessionStorage según tu implementación
+    localStorage.removeItem("usuarioLogueado"); // Cambié sessionStorage a localStorage
+    setUsuarioLogueado(false); // Cambié a false para representar el estado de no logueado
+    navegacion("/"); // Redirige a la página principal
   };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -27,12 +29,12 @@ const Menu = ({ usuarioLogueado, setUsuarioLogueado }) => {
             <NavLink end className="nav-link" to="/">
               Inicio
             </NavLink>
-            {usuarioLogueado !== "" ? (
+            {usuarioLogueado ? ( // Cambié la condición para verificar el estado booleano
               <>
                 <NavLink end className="nav-link" to="/administrador">
                   Administrador
                 </NavLink>
-                <Button className="nav-link" onClick={logout}>
+                <Button variant="outline-danger" onClick={logout}>
                   Logout
                 </Button>
               </>
